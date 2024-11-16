@@ -1,33 +1,45 @@
 import React from 'react';
-import { View, Platform } from 'react-native';
+import { View, Platform, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Svg, { Path } from 'react-native-svg';
 
 import ProfileScreen from '../screens/ProfileScreen';
 import LocationCreatorScreen from '../screens/LocationCreatorScreen';
 import MapScreen from '../screens/MapScreen';
-import MultimediaScreen from '../screens/MultimediaScreen';
+import MarketplaceScreen from '../screens/MarketplaceScreen';
 import WalletScreen from '../screens/WalletScreen';
 
 const Tab = createBottomTabNavigator();
 
 const TabBarIcon = ({ focused, color, size, name }) => {
   return (
-    <View style={{
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingTop: 8,
-    }}>
-      <MaterialCommunityIcons name={name} size={size} color={color} />
+    <View style={[
+      styles.iconContainer,
+      focused && styles.iconContainerFocused
+    ]}>
+      <View style={styles.iconWrapper}>
+        <MaterialCommunityIcons 
+          name={name} 
+          size={size} 
+          color={focused ? color : '#757575'} 
+        />
+        {focused && (
+          <View style={[styles.glowEffect, { backgroundColor: color }]} />
+        )}
+      </View>
       {focused && (
-        <View style={{
-          position: 'absolute',
-          bottom: -8,
-          width: 4,
-          height: 4,
-          borderRadius: 2,
-          backgroundColor: color,
-        }} />
+        <Svg
+          width={50}
+          height={4}
+          viewBox="0 0 50 4"
+          style={styles.curvedLine}
+        >
+          <Path
+            d="M0 4C12.5 4 12.5 0 25 0S37.5 4 50 4"
+            fill={color}
+          />
+        </Svg>
       )}
     </View>
   );
@@ -47,14 +59,16 @@ const BottomTabNavigator = () => {
           shadowRadius: 3,
           height: Platform.OS === 'ios' ? 85 : 65,
           paddingBottom: Platform.OS === 'ios' ? 20 : 8,
+          position: 'relative',
         },
-        tabBarActiveTintColor: '#4CAF50',
+        tabBarActiveTintColor: '#1E88E5',
         tabBarInactiveTintColor: '#757575',
         headerShown: false,
         tabBarShowLabel: true,
         tabBarLabelStyle: {
           fontSize: 12,
           marginTop: -5,
+          fontWeight: '600',
         },
       }}
     >
@@ -63,7 +77,12 @@ const BottomTabNavigator = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon focused={focused} color={color} size={24} name="account" />
+            <TabBarIcon 
+              focused={focused} 
+              color="#E91E63" 
+              size={24} 
+              name="account" 
+            />
           ),
         }}
       />
@@ -72,7 +91,12 @@ const BottomTabNavigator = () => {
         component={LocationCreatorScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon focused={focused} color={color} size={24} name="map-marker-plus" />
+            <TabBarIcon 
+              focused={focused} 
+              color="#FF9800" 
+              size={24} 
+              name="map-marker-plus" 
+            />
           ),
         }}
       />
@@ -81,16 +105,26 @@ const BottomTabNavigator = () => {
         component={MapScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon focused={focused} color={color} size={24} name="map" />
+            <TabBarIcon 
+              focused={focused} 
+              color="#4CAF50" 
+              size={24} 
+              name="map" 
+            />
           ),
         }}
       />
       <Tab.Screen
-        name="Multimedia"
-        component={MultimediaScreen}
+        name="Mercado"
+        component={MarketplaceScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon focused={focused} color={color} size={24} name="image-multiple" />
+            <TabBarIcon 
+              focused={focused} 
+              color="#9C27B0" 
+              size={24} 
+              name="store" 
+            />
           ),
         }}
       />
@@ -99,12 +133,50 @@ const BottomTabNavigator = () => {
         component={WalletScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon focused={focused} color={color} size={24} name="wallet" />
+            <TabBarIcon 
+              focused={focused} 
+              color="#2196F3" 
+              size={24} 
+              name="wallet" 
+            />
           ),
         }}
       />
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: 30,
+  },
+  iconContainerFocused: {
+    transform: [{ translateY: -5 }],
+  },
+  iconWrapper: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    position: 'relative',
+  },
+  glowEffect: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    borderRadius: 20,
+    opacity: 0.15,
+    transform: [{ scale: 1.5 }],
+  },
+  curvedLine: {
+    position: 'absolute',
+    bottom: -15,
+    left: 0,
+  },
+});
 
 export default BottomTabNavigator; 
