@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Quiago",
+    "slug": "quiago",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./quiagoApp/assets/quiago-icon.jpg",
+    "splash": {
+      "backgroundColor": "#2193b0"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.quiago.opensource",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#2193b0"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
+    }
+  }
+} 
